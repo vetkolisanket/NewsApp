@@ -1,9 +1,6 @@
 package com.sanket.newsapp
 
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.annotation.LayoutRes
+import android.widget.ImageView
 
 val Any.TAG: String
     get() {
@@ -11,5 +8,6 @@ val Any.TAG: String
         return if (tag.length <= 23) tag else tag.substring(0, 23)
     }
 
-fun ViewGroup.inflateView(@LayoutRes viewId: Int): View =
-    LayoutInflater.from(this.context).inflate(viewId, this, false)
+fun ImageView.load(url: String) {
+    GlideApp.with(this.context).load(url).centerCrop().placeholder(R.drawable.ic_launcher_foreground).into(this)
+}

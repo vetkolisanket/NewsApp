@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.sanket.newsapp.api.models.Article
 import com.sanket.newsapp.databinding.ItemNewsBinding
+import com.sanket.newsapp.load
 
 class NewsAdapter(val articles: MutableList<Article>): RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
 
@@ -31,6 +32,7 @@ class NewsAdapter(val articles: MutableList<Article>): RecyclerView.Adapter<News
         fun bind() {
             val article = articles[adapterPosition]
             binding.apply {
+                ivNews.load(article.imageUrl)
                 tvTitle.text = article.title
                 tvDescription.text = article.description
                 tvSource.text = article.sourceGist.name
