@@ -3,7 +3,7 @@ package com.sanket.newsapp.api.models.response
 import com.google.gson.annotations.SerializedName
 import com.sanket.newsapp.api.models.Article
 
-class NewsResponse(
+data class NewsResponse(
     @SerializedName("status")
     val status: String,
 
@@ -18,4 +18,6 @@ class NewsResponse(
 
     @SerializedName("articles")
     val articles: List<Article>
-)
+) {
+    fun success(): Boolean = "ok".equals(status, true)
+}

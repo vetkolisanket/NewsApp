@@ -1,44 +1,42 @@
 package com.sanket.newsapp.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
-import androidx.lifecycle.lifecycleScope
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
+import androidx.lifecycle.Observer
+import com.sanket.newsapp.MainViewModel
 import com.sanket.newsapp.R
-import com.sanket.newsapp.TAG
-import com.sanket.newsapp.api.ApiConstants
-import com.sanket.newsapp.api.AuthInterceptor
-import com.sanket.newsapp.api.INewsService
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import okhttp3.OkHttpClient
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import com.sanket.newsapp.api.Status
+import com.sanket.newsapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+
+    private val viewModel: MainViewModel by viewModels()
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        lifecycleScope.launch(Dispatchers.IO) {
-            val httpClient = OkHttpClient.Builder().addInterceptor(AuthInterceptor()).build()
-            val retrofit = Retrofit.Builder()
-                .baseUrl(ApiConstants.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(httpClient)
-                .build()
-            val newsService = retrofit.create(INewsService::class.java)
-            try {
-                val response = newsService.getNews(mutableMapOf(Pair("q", "bitcoin")))
-                withContext(Dispatchers.Main) {
-                    Toast.makeText(this@MainActivity, "response.status + response.message", Toast.LENGTH_SHORT).show()
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        initLD()
+        viewModel.getNews()
+    }
+
+    private fun initLD() {
+        viewModel.newsLD.observe(this) {
+            when (it.status) {
+                Status.LOADING -> binding.progress.isVisible = true
+                Status.ERROR -> {
+                    binding.progress.isVisible = false
+                    Toast.makeText(this, it.message?.getText(this), Toast.LENGTH_SHORT).show()
                 }
-            } catch (e: Exception) {
-                Log.e(TAG, "onCreate: ${e.localizedMessage}")
+                Status.SUCCESS -> {
+                    binding.progress.isVisible = false
+                    Toast.makeText(this, it.data.toString(), Toast.LENGTH_SHORT).show()
+                }
             }
-
-
         }
     }
 }

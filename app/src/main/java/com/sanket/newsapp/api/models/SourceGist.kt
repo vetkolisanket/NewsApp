@@ -4,8 +4,7 @@ import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
-@Parcelize
-class SourceGist (
+class SourceGist(
 
     @SerializedName("id")
     val id: String,
@@ -13,4 +12,4 @@ class SourceGist (
     @SerializedName("name")
     val name: String
 
-    ): Parcelable
+)
