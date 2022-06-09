@@ -9,5 +9,6 @@ val Any.TAG: String
     }
 
 fun ImageView.load(url: String) {
-    GlideApp.with(this.context).load(url).centerCrop().placeholder(R.drawable.ic_launcher_foreground).into(this)
+    GlideApp.with(this.context).load(url).centerCrop()
+        .placeholder(R.drawable.ic_launcher_foreground).into(this)
 }

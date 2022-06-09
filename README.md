@@ -3,4 +3,6 @@ Trying out the [News API](https://newsapi.org/docs/get-started) to build a basic
 
 TODOs
 - [x] Integrate the /everything endpoint
-- [ ] Display the list of news in a recycler view
+- [x] Display the list of news in a recycler view
+- [ ] Move news list into fragment
+- [ ] News detail fragment
