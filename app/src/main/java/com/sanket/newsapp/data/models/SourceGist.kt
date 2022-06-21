@@ -1,8 +1,6 @@
-package com.sanket.newsapp.api.models
+package com.sanket.newsapp.data.models
 
-import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import kotlinx.parcelize.Parcelize
 
 class SourceGist(
 

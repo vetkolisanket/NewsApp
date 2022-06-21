@@ -4,5 +4,7 @@ Trying out the [News API](https://newsapi.org/docs/get-started) to build a basic
 TODOs
 - [x] Integrate the /everything endpoint
 - [x] Display the list of news in a recycler view
-- [ ] Move news list into fragment
+- [x] Move news list into fragment
 - [ ] News detail fragment
+- [x] Offline support
+- [ ] Converter for publishedAt from string to date

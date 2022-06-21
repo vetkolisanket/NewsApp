@@ -1,9 +1,10 @@
 package com.sanket.newsapp.api.models.response
 
 import com.google.gson.annotations.SerializedName
-import com.sanket.newsapp.api.models.Article
+import com.sanket.newsapp.data.models.Article
 
 data class NewsResponse(
+
     @SerializedName("status")
     val status: String,
 
@@ -20,4 +21,7 @@ data class NewsResponse(
     val articles: List<Article>
 ) {
     fun success(): Boolean = "ok".equals(status, true)
+
+    constructor(articles: List<Article>) : this("ok", null, null, articles.size, articles)
+
 }

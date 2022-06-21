@@ -11,7 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sanket.newsapp.MainViewModel
 import com.sanket.newsapp.api.Status
-import com.sanket.newsapp.api.models.Article
+import com.sanket.newsapp.data.models.Article
 import com.sanket.newsapp.databinding.FragmentNewsListBinding
 
 /**
@@ -60,11 +60,20 @@ class NewsListFragment : Fragment() {
                 Status.LOADING -> binding.progress.isVisible = true
                 Status.ERROR -> {
                     binding.progress.isVisible = false
-                    Toast.makeText(requireContext(), it.message?.getText(requireContext()), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        it.message?.getText(requireContext()),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
                 Status.SUCCESS -> {
                     binding.progress.isVisible = false
                     adapter.addData(it.data?.articles)
+                }
+                Status.OFFLINE -> {
+                    binding.progress.isVisible = false
+                    adapter.addData(it.data?.articles)
+                    Toast.makeText(requireContext(), "Data loaded from offline", Toast.LENGTH_SHORT).show()
                 }
             }
         }

@@ -3,7 +3,7 @@ package com.sanket.newsapp.ui
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.sanket.newsapp.api.models.Article
+import com.sanket.newsapp.data.models.Article
 import com.sanket.newsapp.databinding.ItemNewsBinding
 import com.sanket.newsapp.load
 

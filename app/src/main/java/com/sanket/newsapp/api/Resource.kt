@@ -2,19 +2,6 @@ package com.sanket.newsapp.api
 
 import androidx.annotation.StringRes
 
-/*
-typealias SimpleResource = Resource<Unit>
-
-sealed class Resource<T>(val data: T? = null, val uiText: UiText? = null) {
-    class Success<T>(data: T?): Resource<T>(data)
-    class Error<T>(uiText: UiText?, data: T? = null): Resource<T>(data, uiText)
-    object Loading: Resource<Unit>()
-
-    companion object {
-        fun unknownError() = Error<Unit>(UiText.unknownError())
-    }
-}*/
-
 data class Resource<out T>(val status: Status, val data: T?, val message: UiText?) {
 
     companion object{
@@ -34,6 +21,12 @@ data class Resource<out T>(val status: Status, val data: T?, val message: UiText
         fun <T> loading(data: T? = null): Resource<T> {
             return Resource(Status.LOADING, data, null)
         }
+
+        fun <T> offline(data: T?): Resource<T> {
+            return Resource(Status.OFFLINE, data, null)
+        }
     }
+
+    fun isSuccess(): Boolean = status == Status.SUCCESS
 
 }
