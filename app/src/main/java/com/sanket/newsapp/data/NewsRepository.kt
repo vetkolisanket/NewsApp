@@ -27,7 +27,6 @@ class NewsRepository private constructor(dao: ArticlesDao){
         return try {
             val response = newsRemoteDataSource.getNews(query)
             if (response.success()) {
-                newsLocalDataSource.saveNewsResponse(response)
                 Resource.success(response)
             } else Resource.error(response.message)
         } catch (e: Exception) {
@@ -38,6 +37,10 @@ class NewsRepository private constructor(dao: ArticlesDao){
 
     suspend fun getNewsFromLocalSource(query: String): Resource<NewsResponse> {
         return Resource.offline(newsLocalDataSource.getNews(query))
+    }
+
+    suspend fun saveResponse(response: Resource<NewsResponse>) {
+        newsLocalDataSource.saveNewsResponse(response.data!!)
     }
 
 }

@@ -15,7 +15,7 @@ class Article(
 
     @ColumnInfo(name = Constants.DB.Columns.AUTHOR)
     @SerializedName("author")
-    val author: String,
+    val author: String?,
 
     @PrimaryKey
     @ColumnInfo(name = Constants.DB.Columns.TITLE)

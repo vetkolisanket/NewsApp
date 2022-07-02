@@ -11,6 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sanket.newsapp.MainViewModel
 import com.sanket.newsapp.api.Status
+import com.sanket.newsapp.api.UiText
 import com.sanket.newsapp.data.models.Article
 import com.sanket.newsapp.databinding.FragmentNewsListBinding
 
@@ -55,28 +56,15 @@ class NewsListFragment : Fragment() {
     }
 
     private fun initLD() {
-        viewModel.newsLD.observe(viewLifecycleOwner) {
-            when (it.status) {
-                Status.LOADING -> binding.progress.isVisible = true
-                Status.ERROR -> {
-                    binding.progress.isVisible = false
-                    Toast.makeText(
-                        requireContext(),
-                        it.message?.getText(requireContext()),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-                Status.SUCCESS -> {
-                    binding.progress.isVisible = false
-                    adapter.addData(it.data?.articles)
-                }
-                Status.OFFLINE -> {
-                    binding.progress.isVisible = false
-                    adapter.addData(it.data?.articles)
-                    Toast.makeText(requireContext(), "Data loaded from offline", Toast.LENGTH_SHORT).show()
-                }
-            }
+        viewModel.apply {
+            newsLD.observe(viewLifecycleOwner) { adapter.addData(it.articles) }
+            loadingLD.observe(viewLifecycleOwner) { binding.progress.isVisible = it }
+            errorLD.observe(viewLifecycleOwner) { toast(it.getText(requireContext())) }
         }
+    }
+
+    private fun toast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
     companion object {
