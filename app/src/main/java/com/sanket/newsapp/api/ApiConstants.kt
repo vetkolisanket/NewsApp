@@ -13,9 +13,11 @@ object ApiConstants {
 
         object Endpoints {
             const val EVERYTHING = "/everything"
+            const val TOP_HEADLINES = "/top-headlines"
         }
     }
 
-    const val GET_NEWS = RestApi.API_VERSION + RestApi.Endpoints.EVERYTHING
+    const val NEWS = RestApi.API_VERSION + RestApi.Endpoints.EVERYTHING
+    const val TOP_HEADLINES = RestApi.API_VERSION + RestApi.Endpoints.TOP_HEADLINES
 
 }

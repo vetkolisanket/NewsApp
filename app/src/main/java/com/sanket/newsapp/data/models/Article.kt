@@ -24,7 +24,7 @@ class Article(
 
     @ColumnInfo(name = Constants.DB.Columns.DESCRIPTION)
     @SerializedName("description")
-    val description: String,
+    val description: String?,
 
     @ColumnInfo(name = Constants.DB.Columns.URL)
     @SerializedName("url")
@@ -32,7 +32,7 @@ class Article(
 
     @ColumnInfo(name = Constants.DB.Columns.URL_TO_IMAGE)
     @SerializedName("urlToImage")
-    val imageUrl: String,
+    val imageUrl: String?,
 
     @ColumnInfo(name = Constants.DB.Columns.PUBLISHED_AT)
     @SerializedName("publishedAt")
@@ -40,6 +40,6 @@ class Article(
 
     @ColumnInfo(name = Constants.DB.Columns.CONTENT)
     @SerializedName("content")
-    val content: String
+    val content: String?
 
 )

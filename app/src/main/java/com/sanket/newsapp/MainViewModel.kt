@@ -22,10 +22,10 @@ class MainViewModel(private val repository: NewsRepository) : ViewModel() {
     val isNetworkAvailable = MutableLiveData<Boolean>()
     val getNewsUseCase by lazy { GetNewsUseCase(repository) }
 
-    fun getNews(query: String = "latest") {
+    fun getTopHeadlines() {
         _loadingLD.value = true
         viewModelScope.launch(Dispatchers.IO) {
-            val news = getNewsUseCase(query, isNetworkAvailable.value == true)
+            val news = getNewsUseCase( isNetworkAvailable.value == true)
             when (news.status) {
                 Status.OFFLINE,
                 Status.SUCCESS -> {

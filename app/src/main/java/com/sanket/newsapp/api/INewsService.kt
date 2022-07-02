@@ -6,7 +6,7 @@ import retrofit2.http.QueryMap
 
 interface INewsService {
 
-    @GET(ApiConstants.GET_NEWS)
+    @GET(ApiConstants.TOP_HEADLINES)
     suspend fun getNews(@QueryMap queryParams: Map<String, String>): NewsResponse
 
 

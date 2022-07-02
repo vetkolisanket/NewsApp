@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
             viewModel.isNetworkAvailable.value = it
         }
         viewModel.isNetworkAvailable.value = isConnectedToInternet()
-        viewModel.getNews()
+        viewModel.getTopHeadlines()
     }
 
 }

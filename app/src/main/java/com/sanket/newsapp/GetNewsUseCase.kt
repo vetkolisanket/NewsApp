@@ -6,15 +6,15 @@ import com.sanket.newsapp.data.NewsRepository
 
 class GetNewsUseCase(private val newsRepository: NewsRepository) {
 
-    suspend operator fun invoke(query: String, isNetworkAvailable: Boolean): Resource<NewsResponse> {
+    suspend operator fun invoke(isNetworkAvailable: Boolean): Resource<NewsResponse> {
         return if (isNetworkAvailable) {
-            val response = newsRepository.getNewsFromRemoteSource(query)
+            val response = newsRepository.getNewsFromRemoteSource()
             if (response.isSuccess()) {
                 newsRepository.saveResponse(response)
             }
             response
         } else {
-            newsRepository.getNewsFromLocalSource(query)
+            newsRepository.getNewsFromLocalSource()
         }
     }
 

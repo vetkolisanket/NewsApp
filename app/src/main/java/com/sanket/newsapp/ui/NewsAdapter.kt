@@ -32,7 +32,7 @@ class NewsAdapter(val articles: MutableList<Article>): RecyclerView.Adapter<News
         fun bind() {
             val article = articles[adapterPosition]
             binding.apply {
-                ivNews.load(article.imageUrl)
+                article.imageUrl?.let { ivNews.load(it) }
                 tvTitle.text = article.title
                 tvDescription.text = article.description
                 tvSource.text = article.sourceGist.name

@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 class SourceGist(
 
     @SerializedName("id")
-    val id: String,
+    val id: String?,
 
     @SerializedName("name")
     val name: String
