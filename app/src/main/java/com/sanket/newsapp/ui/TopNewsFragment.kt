@@ -10,33 +10,25 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sanket.newsapp.MainViewModel
-import com.sanket.newsapp.api.Status
-import com.sanket.newsapp.api.UiText
 import com.sanket.newsapp.data.models.Article
-import com.sanket.newsapp.databinding.FragmentNewsListBinding
+import com.sanket.newsapp.databinding.FragmentTopNewsBinding
 
-/**
- * A simple [Fragment] subclass.
- * Use the [NewsListFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class NewsListFragment : Fragment() {
+class TopNewsFragment : Fragment() {
 
-    private lateinit var binding: FragmentNewsListBinding
+    private lateinit var binding: FragmentTopNewsBinding
     private val articles by lazy { mutableListOf<Article>() }
     private val adapter by lazy { NewsAdapter(articles) }
     private val viewModel: MainViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = FragmentNewsListBinding.inflate(layoutInflater)
+        binding = FragmentTopNewsBinding.inflate(layoutInflater)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         return binding.root
     }
 
@@ -49,7 +41,7 @@ class NewsListFragment : Fragment() {
     private fun initRecyclerView() {
         binding.apply {
             rvNews.apply {
-                adapter = this@NewsListFragment.adapter
+                adapter = this@TopNewsFragment.adapter
                 layoutManager = LinearLayoutManager(requireContext())
             }
         }
@@ -68,13 +60,7 @@ class NewsListFragment : Fragment() {
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @return A new instance of fragment NewsListFragment.
-         */
         @JvmStatic
-        fun newInstance() = NewsListFragment()
+        fun newInstance() = TopNewsFragment()
     }
 }
