@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity() {
         }
         viewModel.isNetworkAvailable.value = isConnectedToInternet()
         binding.bnvNews.setupWithNavController((supportFragmentManager.findFragmentById(R.id.fcvNews) as NavHostFragment).navController)
+        binding.bnvNews.selectedItemId = R.id.topNewsFragment
         viewModel.getTopHeadlines()
     }
 
