@@ -8,3 +8,5 @@ TODOs
 - [ ] News detail fragment
 - [x] Offline support
 - [ ] Converter for publishedAt from string to date
+- [ ] Bottom Nav for top news and search news
+- [ ] Search News fragment
