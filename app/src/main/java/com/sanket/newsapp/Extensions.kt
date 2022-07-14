@@ -5,6 +5,7 @@ import android.net.ConnectivityManager
 import android.os.Looper
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.annotation.CheckResult
 import androidx.core.widget.doOnTextChanged
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -45,4 +46,8 @@ fun EditText.textChanges(): Flow<CharSequence?> {
         val listener = doOnTextChanged { text, _, _, _ -> trySend(text) }
         awaitClose { removeTextChangedListener(listener) }
     }.onStart { emit(text) }
+}
+
+fun Context.showToast(message: String) {
+    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }

@@ -19,5 +19,9 @@ sealed class UiText {
         fun unknownError(): UiText {
             return StringResource(R.string.unknown_error)
         }
+
+        fun noInternetError(): UiText {
+            return StringResource(R.string.no_internet)
+        }
     }
 }

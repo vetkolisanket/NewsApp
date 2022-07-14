@@ -5,7 +5,7 @@ import com.sanket.newsapp.data.source.local.ArticlesDao
 
 class NewsLocalDataSource(private val dao: ArticlesDao): NewsDataSource {
 
-    override suspend fun getNews(): NewsResponse {
+    override suspend fun getTopNews(): NewsResponse {
         val articles = dao.getArticles()
         return NewsResponse(articles)
     }

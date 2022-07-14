@@ -1,7 +1,6 @@
 package com.sanket.newsapp
 
 import androidx.lifecycle.*
-import com.sanket.newsapp.api.Resource
 import com.sanket.newsapp.api.Status
 import com.sanket.newsapp.api.UiText
 import com.sanket.newsapp.api.models.response.NewsResponse
@@ -9,7 +8,7 @@ import com.sanket.newsapp.data.NewsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class MainViewModel(private val repository: NewsRepository) : ViewModel() {
+class SearchNewsViewModel(private val repository: NewsRepository): ViewModel() {
 
     private val _newsLD = MutableLiveData<NewsResponse>()
     private val _loadingLD = MutableLiveData<Boolean>()
@@ -20,16 +19,18 @@ class MainViewModel(private val repository: NewsRepository) : ViewModel() {
     val errorLD: LiveData<UiText> = _errorLD
 
     val isNetworkAvailable = MutableLiveData<Boolean>()
-    val getNewsUseCase by lazy { GetNewsUseCase(repository) }
+    val searchNewsUseCase by lazy { SearchNewsUseCase(repository) }
 
-    fun getTopHeadlines() {
+    private fun isNetworkAvailable() = isNetworkAvailable.value == true
+
+    fun searchNews(searchText: String) {
         _loadingLD.value = true
         viewModelScope.launch(Dispatchers.IO) {
-            val news = getNewsUseCase( isNetworkAvailable.value == true)
-            when (news.status) {
-                Status.OFFLINE,
-                Status.SUCCESS -> _newsLD.postValue(news.data!!)
-                Status.ERROR -> _errorLD.postValue(news.message!!)
+            val resource = searchNewsUseCase(isNetworkAvailable(), searchText)
+            when (resource.status) {
+                Status.SUCCESS -> _newsLD.postValue(resource.data!!)
+                Status.OFFLINE -> _errorLD.postValue(UiText.noInternetError())
+                Status.ERROR -> _errorLD.postValue(resource.message!!)
                 else -> Unit
             }
             _loadingLD.postValue(false)
@@ -38,11 +39,11 @@ class MainViewModel(private val repository: NewsRepository) : ViewModel() {
 
 }
 
-class MainViewModelFactory(private val repository: NewsRepository): ViewModelProvider.Factory {
+class SearchNewsViewModelFactory(private val repository: NewsRepository): ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         @Suppress("UNCHECKED_CAST")
-        if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
-            return MainViewModel(repository) as T
+        if (modelClass.isAssignableFrom(SearchNewsViewModel::class.java)) {
+            return SearchNewsViewModel(repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel Class")
     }

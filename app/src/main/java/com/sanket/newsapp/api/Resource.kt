@@ -22,7 +22,7 @@ data class Resource<out T>(val status: Status, val data: T?, val message: UiText
             return Resource(Status.LOADING, data, null)
         }
 
-        fun <T> offline(data: T?): Resource<T> {
+        fun <T> offline(data: T? = null): Resource<T> {
             return Resource(Status.OFFLINE, data, null)
         }
     }

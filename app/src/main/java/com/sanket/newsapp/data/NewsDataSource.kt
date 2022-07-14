@@ -4,6 +4,6 @@ import com.sanket.newsapp.api.models.response.NewsResponse
 
 interface NewsDataSource {
 
-    suspend fun getNews(): NewsResponse?
+    suspend fun getTopNews(): NewsResponse?
 
 }

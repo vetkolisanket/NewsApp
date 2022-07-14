@@ -8,13 +8,13 @@ class GetNewsUseCase(private val newsRepository: NewsRepository) {
 
     suspend operator fun invoke(isNetworkAvailable: Boolean): Resource<NewsResponse> {
         return if (isNetworkAvailable) {
-            val response = newsRepository.getNewsFromRemoteSource()
+            val response = newsRepository.getTopNewsFromRemoteSource()
             if (response.isSuccess()) {
-                newsRepository.saveResponse(response)
+                newsRepository.saveTopNewsToLocalSource(response)
             }
             response
         } else {
-            newsRepository.getNewsFromLocalSource()
+            newsRepository.getTopNewsFromLocalSource()
         }
     }
 

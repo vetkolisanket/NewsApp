@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.sanket.newsapp.MainViewModel
 import com.sanket.newsapp.data.models.Article
 import com.sanket.newsapp.databinding.FragmentTopNewsBinding
+import com.sanket.newsapp.showToast
 
 class TopNewsFragment : Fragment() {
 
@@ -51,12 +52,8 @@ class TopNewsFragment : Fragment() {
         viewModel.apply {
             newsLD.observe(viewLifecycleOwner) { adapter.addData(it.articles) }
             loadingLD.observe(viewLifecycleOwner) { binding.progress.isVisible = it }
-            errorLD.observe(viewLifecycleOwner) { toast(it.getText(requireContext())) }
+            errorLD.observe(viewLifecycleOwner) { requireContext().showToast(it.getText(requireContext())) }
         }
-    }
-
-    private fun toast(message: String) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
     companion object {

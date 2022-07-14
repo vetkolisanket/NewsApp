@@ -23,9 +23,9 @@ class NewsRepository private constructor(dao: ArticlesDao){
     private val newsRemoteDataSource: NewsRemoteDataSource by lazy { NewsRemoteDataSource }
     private val newsLocalDataSource: NewsLocalDataSource by lazy { NewsLocalDataSource(dao) }
 
-    suspend fun getNewsFromRemoteSource(): Resource<NewsResponse> {
+    suspend fun getTopNewsFromRemoteSource(): Resource<NewsResponse> {
         return try {
-            val response = newsRemoteDataSource.getNews()
+            val response = newsRemoteDataSource.getTopNews()
             if (response.success()) {
                 Resource.success(response)
             } else Resource.error(response.message)
@@ -35,12 +35,24 @@ class NewsRepository private constructor(dao: ArticlesDao){
         }
     }
 
-    suspend fun getNewsFromLocalSource(): Resource<NewsResponse> {
-        return Resource.offline(newsLocalDataSource.getNews())
+    suspend fun getTopNewsFromLocalSource(): Resource<NewsResponse> {
+        return Resource.offline(newsLocalDataSource.getTopNews())
     }
 
-    suspend fun saveResponse(response: Resource<NewsResponse>) {
+    suspend fun saveTopNewsToLocalSource(response: Resource<NewsResponse>) {
         newsLocalDataSource.saveNewsResponse(response.data!!)
+    }
+
+    suspend fun getNewsForQuery(query: String): Resource<NewsResponse> {
+        return try {
+            val response = newsRemoteDataSource.getNewsForQuery(query)
+            if (response.success()) {
+                Resource.success(response)
+            } else Resource.error(response.message)
+        } catch (e: Exception) {
+            Log.e(TAG, "getNews: ${e.localizedMessage}")
+            Resource.error(e.localizedMessage)
+        }
     }
 
 }
