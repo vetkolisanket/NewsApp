@@ -1,27 +1,21 @@
-package com.sanket.newsapp
+package com.sanket.newsapp.viewmodels
 
 import androidx.lifecycle.*
 import com.sanket.newsapp.api.Status
 import com.sanket.newsapp.api.UiText
 import com.sanket.newsapp.api.models.response.NewsResponse
 import com.sanket.newsapp.data.NewsRepository
+import com.sanket.newsapp.usecases.SearchNewsUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class SearchNewsViewModel(private val repository: NewsRepository): ViewModel() {
+class SearchNewsViewModel(private val repository: NewsRepository): BaseViewModel() {
 
     private val _newsLD = MutableLiveData<NewsResponse>()
-    private val _loadingLD = MutableLiveData<Boolean>()
-    private val _errorLD = MutableLiveData<UiText>()
 
     val newsLD: LiveData<NewsResponse> = _newsLD
-    val loadingLD: LiveData<Boolean> = _loadingLD
-    val errorLD: LiveData<UiText> = _errorLD
 
-    val isNetworkAvailable = MutableLiveData<Boolean>()
     val searchNewsUseCase by lazy { SearchNewsUseCase(repository) }
-
-    private fun isNetworkAvailable() = isNetworkAvailable.value == true
 
     fun searchNews(searchText: String) {
         _loadingLD.value = true

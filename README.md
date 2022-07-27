@@ -9,5 +9,7 @@ TODOs
 - [x] Offline support
 - [ ] Converter for publishedAt from string to date
 - [x] Bottom Nav for top news and search news
-- [ ] Search News fragment
+- [x] Search News fragment
 - [ ] Base View Model
+- [ ] Add hilt
+- [ ] Pagination

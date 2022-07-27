@@ -1,4 +1,4 @@
-package com.sanket.newsapp
+package com.sanket.newsapp.usecases
 
 import com.sanket.newsapp.api.Resource
 import com.sanket.newsapp.api.models.response.NewsResponse

@@ -15,9 +15,11 @@ import com.sanket.newsapp.*
 import com.sanket.newsapp.data.NewsRepository
 import com.sanket.newsapp.data.models.Article
 import com.sanket.newsapp.databinding.FragmentSearchNewsBinding
+import com.sanket.newsapp.viewmodels.SearchNewsViewModel
+import com.sanket.newsapp.viewmodels.SearchNewsViewModelFactory
 import kotlinx.coroutines.flow.*
 
-class SearchNewsFragment : Fragment() {
+class SearchNewsFragment : BaseFragment() {
 
     private val viewModel: SearchNewsViewModel by viewModels {
         SearchNewsViewModelFactory(NewsRepository.getInstance((requireActivity().application as NewsApplication).database.articlesDao()))
@@ -37,6 +39,9 @@ class SearchNewsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        connectionLiveData.observe(this) {
+            viewModel.isNetworkAvailable.value = it
+        }
         viewModel.isNetworkAvailable.value = requireContext().isConnectedToInternet()
     }
 
@@ -94,7 +99,7 @@ class SearchNewsFragment : Fragment() {
             .textChanges()
             .filter { it?.length ?: 0 > 2 }
             .debounce(500)
-            //            .distinctUntilChanged()
+//            .distinctUntilChanged()
             .onEach {
                 it?.let { Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show() }
             }
