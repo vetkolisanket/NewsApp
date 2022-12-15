@@ -1,5 +1,6 @@
 package com.sanket.newsapp.data.source.local
 
+import android.icu.text.CaseMap.Title
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -15,5 +16,8 @@ interface ArticlesDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveArticle(article: Article)
+
+    @Query("SELECT * FROM ${Constants.DB.TABLE_NAME} WHERE ${Constants.DB.Columns.TITLE} = :title")
+    suspend fun getArticle(title: String): Article
 
 }

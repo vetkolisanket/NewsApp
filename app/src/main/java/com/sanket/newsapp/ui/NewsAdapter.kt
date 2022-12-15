@@ -1,13 +1,17 @@
 package com.sanket.newsapp.ui
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.sanket.newsapp.Constants
 import com.sanket.newsapp.data.models.Article
 import com.sanket.newsapp.databinding.ItemNewsBinding
 import com.sanket.newsapp.load
 
 class NewsAdapter(val articles: MutableList<Article>): RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
+
+    var itemClickListener: IOnListItemClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
         val binding = ItemNewsBinding.inflate(LayoutInflater.from(parent.context))
@@ -28,7 +32,17 @@ class NewsAdapter(val articles: MutableList<Article>): RecyclerView.Adapter<News
         }
     }
 
-    inner class NewsViewHolder(val binding: ItemNewsBinding): RecyclerView.ViewHolder(binding.root) {
+    inner class NewsViewHolder(private val binding: ItemNewsBinding): RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            binding.root.setOnClickListener {
+                val bundle = Bundle().apply {
+                    putString(Constants.BUNDLE_KEYS.TITLE, articles[adapterPosition].title)
+                }
+                itemClickListener?.onListItemClick(articles[adapterPosition], it, this, adapterPosition, bundle)
+            }
+        }
+
         fun bind() {
             val article = articles[adapterPosition]
             binding.apply {

@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.sanket.newsapp.*
 import com.sanket.newsapp.data.NewsRepository
 import com.sanket.newsapp.data.models.Article
@@ -17,7 +19,7 @@ import com.sanket.newsapp.viewmodels.TopNewsViewModelFactory
 
 class TopNewsFragment : BaseFragment() {
 
-    private lateinit var binding: FragmentTopNewsBinding
+    private val binding: FragmentTopNewsBinding by lazy { FragmentTopNewsBinding.inflate(layoutInflater) }
     private val articles by lazy { mutableListOf<Article>() }
     private val adapter by lazy { NewsAdapter(articles) }
     private val viewModel: TopNewsViewModel by viewModels {
@@ -27,7 +29,6 @@ class TopNewsFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = FragmentTopNewsBinding.inflate(layoutInflater)
         connectionLiveData.observe(this) {
             viewModel.isNetworkAvailable.value = it
         }
@@ -49,6 +50,17 @@ class TopNewsFragment : BaseFragment() {
     }
 
     private fun initRecyclerView() {
+        adapter.itemClickListener = object : IOnListItemClickListener {
+            override fun onListItemClick(
+                listItem: Any,
+                view: View,
+                viewHolder: RecyclerView.ViewHolder,
+                position: Int,
+                bundle: Bundle?
+            ) {
+                findNavController().navigate(R.id.newsDetailsActivity, bundle)
+            }
+        }
         binding.apply {
             rvNews.apply {
                 adapter = this@TopNewsFragment.adapter

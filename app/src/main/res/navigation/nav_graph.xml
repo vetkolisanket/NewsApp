@@ -17,5 +17,20 @@
         android:name="com.sanket.newsapp.ui.TopNewsFragment"
         android:label="TopNewsFragment"
         tools:layout="@layout/fragment_top_news"
-        />
+        >
+        <action
+            android:id="@+id/action_topNewsFragment_to_newsDetailsFragment"
+            app:destination="@id/newsDetailsActivity" />
+    </fragment>
+
+    <activity
+        android:id="@+id/newsDetailsActivity"
+        android:name="com.sanket.newsapp.ui.NewsDetailsActivity"
+        android:label="NewsDetailsActivity"
+        tools:layout="@layout/activity_news_details"
+        >
+        <argument
+            android:name="title"
+            app:argType="string" />
+    </activity>
 </navigation>

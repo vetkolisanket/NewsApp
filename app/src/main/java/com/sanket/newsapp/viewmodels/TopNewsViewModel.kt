@@ -2,10 +2,9 @@ package com.sanket.newsapp.viewmodels
 
 import androidx.lifecycle.*
 import com.sanket.newsapp.api.Status
-import com.sanket.newsapp.api.UiText
 import com.sanket.newsapp.api.models.response.NewsResponse
 import com.sanket.newsapp.data.NewsRepository
-import com.sanket.newsapp.usecases.GetNewsUseCase
+import com.sanket.newsapp.usecases.GetTopNewsUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -15,12 +14,12 @@ class TopNewsViewModel(private val repository: NewsRepository) : BaseViewModel()
 
     val newsLD: LiveData<NewsResponse> = _newsLD
 
-    val getNewsUseCase by lazy { GetNewsUseCase(repository) }
+    val getTopNewsUseCase by lazy { GetTopNewsUseCase(repository) }
 
     fun getTopHeadlines() {
         _loadingLD.value = true
         viewModelScope.launch(Dispatchers.IO) {
-            val news = getNewsUseCase( isNetworkAvailable())
+            val news = getTopNewsUseCase(isNetworkAvailable())
             when (news.status) {
                 Status.OFFLINE,
                 Status.SUCCESS -> _newsLD.postValue(news.data!!)

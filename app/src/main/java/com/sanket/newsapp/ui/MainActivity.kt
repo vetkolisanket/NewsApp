@@ -11,11 +11,10 @@ import com.sanket.newsapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
+    private val binding: ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.bnvNews.setupWithNavController((supportFragmentManager.findFragmentById(R.id.fcvNews) as NavHostFragment).navController)
         binding.bnvNews.selectedItemId = R.id.topNewsFragment

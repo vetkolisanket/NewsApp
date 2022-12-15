@@ -16,4 +16,8 @@ object Constants {
             const val CONTENT = "content"
         }
     }
+
+    object BUNDLE_KEYS {
+        const val TITLE: String = "title"
+    }
 }
