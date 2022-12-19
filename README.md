@@ -15,3 +15,4 @@ TODOs
 - [ ] Pagination
 - [ ] Activity scene transition from list to detail
 - [ ] Gradient or tint to make new source and author visible
+- [ ] Offline first

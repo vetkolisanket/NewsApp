@@ -74,6 +74,7 @@ class TopNewsFragment : BaseFragment() {
             newsLD.observe(viewLifecycleOwner) { adapter.addData(it.articles) }
             loadingLD.observe(viewLifecycleOwner) { binding.progress.isVisible = it }
             errorLD.observe(viewLifecycleOwner) { requireContext().showToast(it.getText(requireContext())) }
+            resetLD.observe(viewLifecycleOwner) { adapter.clearData() }
         }
     }
 

@@ -9,6 +9,9 @@ import com.sanket.newsapp.Constants
 @Entity(tableName = Constants.DB.TABLE_NAME)
 class Article(
 
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
+
     @ColumnInfo(name = Constants.DB.Columns.SOURCE)
     @SerializedName("source")
     val sourceGist: SourceGist,
@@ -17,7 +20,6 @@ class Article(
     @SerializedName("author")
     val author: String?,
 
-    @PrimaryKey
     @ColumnInfo(name = Constants.DB.Columns.TITLE)
     @SerializedName("title")
     val title: String,

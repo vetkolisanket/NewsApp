@@ -32,6 +32,12 @@ class NewsAdapter(val articles: MutableList<Article>): RecyclerView.Adapter<News
         }
     }
 
+    fun clearData() {
+        val size = articles.size
+        articles.clear()
+        notifyItemRangeRemoved(0, size)
+    }
+
     inner class NewsViewHolder(private val binding: ItemNewsBinding): RecyclerView.ViewHolder(binding.root) {
 
         init {

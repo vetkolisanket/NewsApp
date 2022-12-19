@@ -14,6 +14,7 @@ object Constants {
             const val URL_TO_IMAGE = "urlToImage"
             const val PUBLISHED_AT = "publishedAt"
             const val CONTENT = "content"
+            const val ID = "id"
         }
     }
 

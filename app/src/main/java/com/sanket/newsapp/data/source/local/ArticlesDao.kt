@@ -11,7 +11,7 @@ import com.sanket.newsapp.data.models.Article
 @Dao
 interface ArticlesDao {
 
-    @Query("SELECT * FROM " + Constants.DB.TABLE_NAME)
+    @Query("SELECT * FROM ${Constants.DB.TABLE_NAME}")
     suspend fun getArticles(): List<Article>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
